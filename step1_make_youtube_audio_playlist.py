@@ -3,6 +3,7 @@ from pytube import YouTube
 from pytube import Playlist
 import moviepy.editor as mp
 import os
+import re
 
 #Download youtube video playlist and convert them into .wav audio format
 
@@ -23,7 +24,13 @@ N = len(PlayListLinks)
 print(f"This link found to be a Playlist Link with number of videos equal to {N} ")
 print(f"\n Lets Download all {N} videos")
 
+#mylist = range(85,106)
 for i,link in enumerate(PlayListLinks):
+    # Process batch-wise in order to avoid possible http 500 error for large playlist
+    '''
+    if(i+1 not in mylist):
+        continue
+    '''
     yt = YouTube(link)
     d_video = yt.streams.filter(progressive=True, file_extension='mp4').order_by('resolution').desc().first()
     # video_titleName = yt.title
@@ -32,13 +39,12 @@ for i,link in enumerate(PlayListLinks):
     outfileName_cpy = outfileName
 
     print(i+1, '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Video is Downloaded.')
-#     my_clip = mp.VideoFileClip(outfileName)
-#     my_clip.audio.write_audiofile(outfileName.split(".")[0]+".wav")
-#     print("damn it ->", outfileName.split(".")[0])
-#     !ffmpeg -i outfileName -ac 2 -f wav outfileName.split(".")[0]+".wav"
-    output = outfileName.split(".")[0]+".wav"
-    output = output.replace(" ", "_")
-    output = "'" + output + "'"
+
+    head, output = os.path.split(outfileName)
+    output= re.sub('[^a-zA-Z0-9.]','_',output)
+    output = output.split(".")[0]+".wav"
+    output = head+"/"+str(i+1)+"."+output
+    
     outfileName = "'" + outfileName + "'"
     cmd = f'ffmpeg -i {outfileName} -ac 2 -f wav {output}'
     os.system(cmd)
