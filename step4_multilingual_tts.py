@@ -607,7 +607,7 @@ if(male):
   # test_ckpt = './bangla_tts/bn_glow_tts/male/checkpoint_328000.pth'
   # test_config = './bangla_tts/bn_glow_tts/male/config.json'
 
-  test_ckpt = './bangla_tts/bn_vits/male/best_model_2360.pth'
+  test_ckpt = './bangla_tts/bn_vits/male/checkpoint_626000.pth'
   test_config = './bangla_tts/bn_vits/male/config.json'
 
 else:
@@ -817,7 +817,13 @@ class BigTextToAudio(object):
         # tag sections
         # text=self.tag_text(text)
 
-        text="।".join([self.tag_text(line) for line in text.split("।")])
+        #text="।".join([self.tag_text(line) for line in text.split("।")])
+        
+        if "।" in text:punct="।"
+        elif "." in text:punct="."
+        else:punct="\n"
+
+        text=punct.join([self.tag_text(line) for line in text.split(punct)])
 
         # text blocks
         blocks=text.split("<SPLIT>")
@@ -889,7 +895,7 @@ class BigTextToAudio(object):
             if not text.strip():
                 print("empty string ",text)
                 continue
-    
+    	
             if lang=="bn":
                 audio=self.bn_tts(text)
                 sr=self.bn_sample_rate
