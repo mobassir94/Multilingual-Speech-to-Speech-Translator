@@ -7,13 +7,23 @@ This repository contains the work of our first ever  Code-mixed English-Arabic s
 
 
 # Our end to end pipeline: 
-1.	Download all youtube videos from this playlist : https://www.youtube.com/playlist?list=PLAEA99D24CA2F9A8F
-2.	Convert videos to audios (.mp4 to .wav conversion)
-3.	Run openAI’s whisper based multilingual STT(speech to text) model to get multilingual text of each video lecture
-4.	Convert each text file from English-Arabic to Bangla Arabic using banglanmt model (a neural machine translator model that can translate texts from English to Bangla with high efficiency)
-5.	Run Multilingual (bangla-arabic) TTS(text to speech) system to get audio version of translated bangla seerah by Dr. Yasir Qadhi
-6.	Convert audios with single image based videos using ffmpeg
+1.	Download all youtube videos from this playlist : https://www.youtube.com/playlist?list=PLAEA99D24CA2F9A8F and Convert videos to audios (.mp4 to .wav conversion)(using this script : https://github.com/mobassir94/Multilingual-Speech-to-Speech-Translator/blob/main/step1_make_youtube_audio_playlist.py )
 
+2.	Run openAI’s whisper based multilingual STT(speech to text) model to get multilingual text of each video lecture (using this script : https://github.com/mobassir94/Multilingual-Speech-to-Speech-Translator/blob/main/step2_run_multilingual_stt.py)
+
+3.	Convert each text file from English-Arabic to Bangla Arabic using banglanmt model (a neural machine translator model that can translate texts from English to Bangla with high efficiency) (using this code : https://github.com/mobassir94/Multilingual-Speech-to-Speech-Translator/blob/main/step3_crosslingual_translator.py )
+
+4.	Run Multilingual (bangla-arabic) TTS(text to speech) system to get audio version of translated bangla seerah by Dr. Yasir Qadhi ( using this code : https://github.com/mobassir94/Multilingual-Speech-to-Speech-Translator/blob/main/step4_multilingual_tts.py )
+
+5.	Convert audios with single image based videos using ffmpeg (using this notebook : https://github.com/mobassir94/Multilingual-Speech-to-Speech-Translator/blob/main/audio_to_video_maker.ipynb )
+
+E2E_Single_Sample_Demo_of_Multilingual_Speech_to_Speech_Translation -> https://github.com/mobassir94/Multilingual-Speech-to-Speech-Translator/blob/main/E2E_Single_Sample_Demo_of_Multilingual_Speech_to_Speech_Translation.ipynb 
+
+using this single notebook -> https://github.com/mobassir94/Multilingual-Speech-to-Speech-Translator/blob/main/E2E-Multilingual%20Speech%20to%20Speech%20Translator.ipynb our whole end to end pipeline can be run step by step with ease.
+
+later on if you find any better multilingual stt model than openAI's whisper then use that instead. whisper is not as good as we expected specially for arabic.it makes mistakes several times but still currently this is the best multilingual STT model that we have available for public use.
+
+if you eliminate whisper and scrape the dataset from this source : https://arqadhi.blogspot.com/ and then follow step 3-5 as discussed above then we believe you will gain at least 4-5% accuracy boost for overall system.
 
 
 # Acknowledgements
